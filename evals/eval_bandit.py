@@ -134,7 +134,7 @@ def online(eval_trajs, model, n_eval, horizon, var, bandit_type):
         batch_size=len(envs))
     cum_means = deploy_online_vec(vec_env, controller, horizon).T
     assert cum_means.shape[0] == n_eval
-    all_means['Lnr'] = cum_means
+    all_means['DPT'] = cum_means
 
 
     controller = EmpMeanPolicy(
@@ -287,7 +287,7 @@ def offline(eval_trajs, model, n_eval, horizon, var, bandit_type):
 
     baselines = {
         'opt': np.array(rs_opt),
-        'lnr': np.array(rs_lnr),
+        'DPT': np.array(rs_lnr),
         'emp': np.array(rs_emp),
         'thmp': np.array(rs_thmp),
         'lcb': np.array(rs_lcb),

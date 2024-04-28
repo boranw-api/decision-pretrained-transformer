@@ -53,20 +53,22 @@ class BanditEnv(BaseEnv):
         self.current_step = 0
         return self.state
 
-    def transit(self, x, u, type = 'stochastic'):
+    def transit(self, x, u):
         a = np.argmax(u)
+
+        '''
         if self.type == 'uniform':
             r = self.means[a] + np.random.normal(0, self.var)
         elif self.type == 'bernoulli':
             r = np.random.binomial(1, self.means[a])
         else:
             raise NotImplementedError
+        '''
 
-        if type == 'stochastic':
-            # reward assignment in a stochastic fashion with a sinusoidial pattern
-            random_step = np.random.randint(0, 500) 
-            r = self.means[a] + np.random.normal(0, self.var) + 0.5 * np.sin(2 * np.pi * random_step / 500)
-
+        # reward assignment in a stochastic fashion with a sinusoidial pattern
+        random_step = np.random.randint(0, 500) 
+        r = self.means[a] + np.random.normal(0, self.var) + 0.5 * np.sin(2 * np.pi * random_step / 500)
+            
         return self.state.copy(), r
 
     def step(self, action):
